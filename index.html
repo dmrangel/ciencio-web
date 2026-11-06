@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ciênc.io: curiosidades científicas</title>
+<meta name="description" content="App para iPhone com curiosidades científicas em português, a foto astronômica do dia da NASA e imagens da natureza. Guarde suas próprias descobertas no aparelho.">
+<meta property="og:title" content="ciênc.io: curiosidades científicas">
+<meta property="og:description" content="Curiosidades de Biologia, Espaço, Física, Química e Matemática, com fotos da NASA e do iNaturalist.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#16181C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2316181C'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%231BD96A' stroke-width='3'/%3E%3Ccircle cx='23' cy='9' r='2.5' fill='%231BD96A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+  :root {
+    --fundo: #16181C;
+    --superficie: #27292E;
+    --superficie-2: #34363C;
+    --borda: #42444A;
+    --texto: #FFFFFF;
+    --texto-base: #B0BAC5;
+    --texto-apoio: #96A2B0;
+    --verde: #1BD96A;
+    --verde-suave: rgba(27, 217, 106, 0.25);
+    --raio: 16px;
+    --largura: 1120px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--fundo);
+    color: var(--texto-base);
+    font: 400 17px/1.6 Inter, system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: 'Space Grotesk', Inter, sans-serif; color: var(--texto); line-height: 1.15; margin: 0; }
+  a { color: var(--verde); }
+  a:hover { color: #4FE58C; }
+  .conteiner { width: min(var(--largura), 100% - 32px); margin-inline: auto; }
+  .pular { position: absolute; left: -999px; }
+  .pular:focus { left: 16px; top: 16px; background: var(--verde); color: #000; padding: 8px 12px; border-radius: 8px; z-index: 10; }
+
+  /* Topo */
+  header.topo { padding: 20px 0; }
+  header.topo .conteiner { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .marca { display: flex; align-items: center; gap: 10px; color: var(--texto); text-decoration: none; font: 700 22px 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+  .marca:hover { color: var(--texto); }
+  nav.links { display: flex; gap: 24px; flex-wrap: wrap; }
+  nav.links a { color: var(--texto-base); text-decoration: none; font-weight: 500; font-size: 15px; }
+  nav.links a:hover { color: var(--texto); }
+
+  /* Abertura */
+  .abertura { padding: 48px 0 80px; }
+  .abertura .conteiner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 56px; align-items: center; }
+  .etiqueta { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: var(--verde-suave); color: var(--verde); font-weight: 600; font-size: 14px; }
+  .abertura h1 { font-size: clamp(40px, 6vw, 64px); letter-spacing: -0.03em; margin: 20px 0 16px; }
+  .abertura h1 span { color: var(--verde); }
+  .abertura p.lead { font-size: 19px; max-width: 34em; margin: 0 0 28px; }
+  .acoes { display: flex; gap: 12px; flex-wrap: wrap; }
+  .botao { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 12px; font-weight: 600; text-decoration: none; }
+  .botao.principal { background: var(--verde); color: #000; }
+  .botao.principal:hover { background: #4FE58C; color: #000; }
+  .botao.secundario { background: var(--superficie-2); color: var(--texto); }
+  .botao.secundario:hover { background: var(--borda); color: var(--texto); }
+  .nota { font-size: 14px; color: var(--texto-apoio); margin-top: 14px; }
+
+  /* iPhone ilustrado */
+  .aparelho {
+    justify-self: center;
+    width: 300px; height: 620px;
+    border-radius: 48px;
+    background: #0B0C0E;
+    border: 10px solid #2B2D33;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: relative;
+  }
+  .aparelho .ilha { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 86px; height: 24px; border-radius: 14px; background: #000; z-index: 2; }
+  .tela { position: absolute; inset: 0; background: var(--fundo); padding: 48px 14px 0; display: flex; flex-direction: column; gap: 12px; color: var(--texto); }
+  .tela .titulo-app { font: 700 24px 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+  .tela .data { font-size: 11px; color: var(--texto-apoio); margin-top: -10px; }
+  .destaque { background: var(--superficie); border: 1px solid var(--superficie-2); border-radius: 16px; overflow: hidden; }
+  .ceu { height: 120px; background: #0E1016; position: relative; overflow: hidden; }
+  .ceu .planeta { position: absolute; width: 84px; height: 84px; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    background: radial-gradient(circle at 35% 35%, #F3D9A4 0%, #D9A85E 45%, #8C5A26 100%); box-shadow: 0 0 40px rgba(243, 217, 164, 0.25); }
+  .ceu .estrela { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #fff; opacity: 0.7; }
+  .destaque .info { padding: 10px 12px 12px; }
+  .destaque .rotulo { font-size: 9px; font-weight: 600; letter-spacing: 0.06em; color: var(--verde); }
+  .destaque .nome { font: 600 15px/1.25 'Space Grotesk', sans-serif; margin-top: 4px; }
+  .chips { display: flex; gap: 6px; overflow: hidden; }
+  .chip { flex-shrink: 0; font-size: 11px; font-weight: 500; padding: 6px 10px; border-radius: 999px; background: var(--superficie); border: 1px solid var(--borda); color: var(--texto); }
+  .chip.ativo { background: var(--verde-suave); border-color: rgba(27, 217, 106, 0.5); color: var(--verde); }
+  .linha { display: flex; gap: 10px; padding: 8px; background: var(--superficie); border: 1px solid var(--superficie-2); border-radius: 12px; }
+  .linha .icone { width: 46px; height: 46px; flex-shrink: 0; border-radius: 9px; background: var(--superficie-2); display: grid; place-items: center; color: var(--texto-apoio); }
+  .linha .area { font-size: 8px; font-weight: 600; letter-spacing: 0.05em; color: var(--texto-apoio); }
+  .linha .nome { font: 600 12px/1.25 'Space Grotesk', sans-serif; margin-top: 2px; }
+  .barra { position: absolute; left: 0; right: 0; bottom: 0; height: 64px; border-top: 1px solid var(--superficie-2); background: rgba(22, 24, 28, 0.95); display: flex; justify-content: space-around; padding-top: 8px; }
+  .barra span { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 9px; font-weight: 500; color: var(--texto-apoio); }
+  .barra span.ativo { color: var(--verde); }
+
+  /* Seções */
+  section { padding: 72px 0; }
+  section.alternada { background: #1A1C20; }
+  .cabecalho-secao { max-width: 40em; margin-bottom: 40px; }
+  .cabecalho-secao h2 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.02em; margin-bottom: 12px; }
+  .cabecalho-secao p { margin: 0; }
+  .grade { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .cartao { background: var(--superficie); border: 1px solid var(--superficie-2); border-radius: var(--raio); padding: 24px; }
+  .cartao .simbolo { width: 44px; height: 44px; border-radius: 12px; background: var(--verde-suave); color: var(--verde); display: grid; place-items: center; margin-bottom: 16px; }
+  .cartao h3 { font-size: 21px; margin-bottom: 8px; }
+  .cartao p { margin: 0; }
+
+  .areas { display: flex; flex-wrap: wrap; gap: 10px; }
+  .areas li { list-style: none; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: var(--superficie); border: 1px solid var(--borda); color: var(--texto); font-weight: 500; }
+  .areas { padding: 0; margin: 0 0 40px; }
+
+  .exemplos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .exemplo { background: var(--superficie); border: 1px solid var(--superficie-2); border-radius: var(--raio); padding: 20px; }
+  .exemplo .area { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--verde); }
+  .exemplo h3 { font-size: 19px; margin: 6px 0 8px; }
+  .exemplo p { margin: 0; font-size: 15px; }
+
+  .fontes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .fonte h3 { font-size: 18px; margin-bottom: 6px; }
+  .fonte p { margin: 0; font-size: 15px; }
+
+  .privacidade { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 24px; align-items: start; background: var(--superficie); border: 1px solid var(--superficie-2); border-radius: 20px; padding: 32px; }
+  .privacidade .simbolo { width: 56px; height: 56px; border-radius: 16px; background: var(--verde-suave); color: var(--verde); display: grid; place-items: center; }
+  .privacidade h2 { font-size: 28px; margin-bottom: 10px; }
+  .privacidade p { margin: 0; }
+
+  footer { padding: 40px 0 56px; border-top: 1px solid var(--superficie-2); font-size: 14px; color: var(--texto-apoio); }
+  footer .conteiner { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  @media (max-width: 860px) {
+    .abertura .conteiner { grid-template-columns: minmax(0, 1fr); }
+    .grade, .exemplos, .fontes { grid-template-columns: minmax(0, 1fr); }
+    nav.links { display: none; }
+    .privacidade { grid-template-columns: minmax(0, 1fr); padding: 24px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="topo">
+  <div class="conteiner">
+    <a class="marca" href="./" aria-label="ciênc.io, página inicial">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#27292E"/><circle cx="16" cy="16" r="7" fill="none" stroke="#1BD96A" stroke-width="3"/><circle cx="23" cy="9" r="2.5" fill="#1BD96A"/></svg>
+      ciênc.io
+    </a>
+    <nav class="links" aria-label="Seções">
+      <a href="#recursos">Recursos</a>
+      <a href="#exemplos">Exemplos</a>
+      <a href="#fontes">Fontes</a>
+      <a href="#privacidade">Privacidade</a>
+    </nav>
+  </div>
+</header>
+
+<main id="conteudo">
+  <div class="abertura">
+    <div class="conteiner">
+      <div>
+        <span class="etiqueta">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="1.5"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg>
+          App para iPhone
+        </span>
+        <h1>A ciência do dia a dia, <span>uma curiosidade por vez.</span></h1>
+        <p class="lead">O ciênc.io reúne curiosidades científicas em português, a foto astronômica do dia da NASA e imagens da natureza do mundo todo. E você ainda pode guardar as suas próprias descobertas.</p>
+        <div class="acoes">
+          <a class="botao principal" href="#recursos">Conhecer o app</a>
+          <a class="botao secundario" href="#exemplos">Ver curiosidades</a>
+        </div>
+        <p class="nota">Em desenvolvimento. Em breve no iPhone.</p>
+      </div>
+
+      <div class="aparelho" role="img" aria-label="Ilustração do app no iPhone: tela Descobrir com a curiosidade do dia sobre Vênus, filtros por área e a lista de curiosidades.">
+        <div class="ilha"></div>
+        <div class="tela" aria-hidden="true">
+          <div class="titulo-app">ciênc.io</div>
+          <div class="data">sexta-feira, 6 de novembro</div>
+          <div class="destaque">
+            <div class="ceu">
+              <span class="estrela" style="left:12%;top:20%"></span><span class="estrela" style="left:80%;top:30%"></span>
+              <span class="estrela" style="left:65%;top:75%"></span><span class="estrela" style="left:25%;top:70%"></span>
+              <span class="estrela" style="left:90%;top:80%"></span><span class="planeta"></span>
+            </div>
+            <div class="info">
+              <div class="rotulo">CURIOSIDADE DO DIA · ESPAÇO</div>
+              <div class="nome">Um dia em Vênus dura mais que um ano em Vênus</div>
+            </div>
+          </div>
+          <div class="chips"><span class="chip ativo">Todas</span><span class="chip">Biologia</span><span class="chip">Espaço</span><span class="chip">Física</span></div>
+          <div class="linha">
+            <div class="icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14z"/><path d="M5 19l8-8"/></svg></div>
+            <div><div class="area">BIOLOGIA</div><div class="nome">Polvos têm três corações</div></div>
+          </div>
+          <div class="linha">
+            <div class="icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/><path d="M7.5 15h9"/></svg></div>
+            <div><div class="area">QUÍMICA</div><div class="nome">Existe um metal que derrete na sua mão</div></div>
+          </div>
+          <div class="barra">
+            <span class="ativo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>Descobrir</span>
+            <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Fotos</span>
+            <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Minhas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="recursos" class="alternada">
+    <div class="conteiner">
+      <div class="cabecalho-secao">
+        <h2>Três abas, nada de complicação</h2>
+        <p>Abra, descubra algo novo e guarde o que achou interessante. Sem cadastro.</p>
+      </div>
+      <div class="grade">
+        <article class="cartao">
+          <div class="simbolo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div>
+          <h3>Descobrir</h3>
+          <p>Uma curiosidade em destaque todo dia, com a foto astronômica da NASA traduzida no próprio iPhone, e dezenas de curiosidades separadas por área.</p>
+        </article>
+        <article class="cartao">
+          <div class="simbolo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+          <h3>Fotos</h3>
+          <p>Galáxias, nebulosas e planetas da NASA misturados a plantas e animais fotografados por pessoas do mundo todo no iNaturalist.</p>
+        </article>
+        <article class="cartao">
+          <div class="simbolo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <h3>Minhas</h3>
+          <p>Escreva suas próprias curiosidades e guarde fotos da câmera ou da galeria. Tudo organizado por área, salvo só no seu aparelho.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="exemplos">
+    <div class="conteiner">
+      <div class="cabecalho-secao">
+        <h2>Cinco áreas da ciência</h2>
+        <p>Filtre pelo que mais te interessa. Alguns exemplos do que tem no app:</p>
+      </div>
+      <ul class="areas">
+        <li>Biologia</li><li>Espaço</li><li>Física</li><li>Química</li><li>Matemática</li>
+      </ul>
+      <div class="exemplos">
+        <article class="exemplo">
+          <span class="area">BIOLOGIA</span>
+          <h3>Polvos têm três corações</h3>
+          <p>Dois bombeiam sangue para as brânquias e o terceiro para o resto do corpo. E o sangue deles é azul, porque usa cobre em vez de ferro.</p>
+        </article>
+        <article class="exemplo">
+          <span class="area">FÍSICA</span>
+          <h3>O GPS precisa da teoria da relatividade</h3>
+          <p>Os relógios dos satélites adiantam cerca de 38 microssegundos por dia. Sem essa correção, a localização erraria vários quilômetros.</p>
+        </article>
+        <article class="exemplo">
+          <span class="area">MATEMÁTICA</span>
+          <h3>Bastam 23 pessoas</h3>
+          <p>Num grupo de 23 pessoas, a chance de duas fazerem aniversário no mesmo dia já passa de 50%.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="fontes" class="alternada">
+    <div class="conteiner">
+      <div class="cabecalho-secao">
+        <h2>De onde vem o conteúdo</h2>
+        <p>Cada imagem mostra o crédito do autor e a licença.</p>
+      </div>
+      <div class="fontes">
+        <article class="cartao fonte">
+          <h3>NASA</h3>
+          <p>A foto astronômica do dia (Astronomy Picture of the Day) e imagens da NASA Image and Video Library.</p>
+        </article>
+        <article class="cartao fonte">
+          <h3>iNaturalist</h3>
+          <p>Fotos de plantas e animais feitas por uma comunidade de naturalistas, com licenças abertas.</p>
+        </article>
+        <article class="cartao fonte">
+          <h3>Wikipédia e Wikimedia Commons</h3>
+          <p>Imagens que ilustram as curiosidades de Química e de outras áreas.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacidade">
+    <div class="conteiner">
+      <div class="privacidade">
+        <div class="simbolo"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/></svg></div>
+        <div>
+          <h2>O que é seu fica com você</h2>
+          <p>O ciênc.io não tem conta, login nem nuvem. Suas curiosidades e fotos ficam salvas só no seu iPhone, e a tradução dos textos em inglês acontece no próprio aparelho.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="conteiner">
+    <span>ciênc.io · feito por Davi Rangel</span>
+    <span>Imagens no app: NASA, iNaturalist e Wikimedia Commons, com crédito a cada autor.</span>
+  </div>
+</footer>
+</body>
+</html>
