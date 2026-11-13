@@ -20,9 +20,11 @@ python3 -m http.server 8000
 
 e acesse `http://localhost:8000`.
 
-## Próximas páginas (para a App Store)
+## Páginas para a App Store
 
-Se o app for publicado, a App Store pede dois links:
+A App Store pede dois links, que o app também abre na tela de Ajustes:
 
 - `privacidade.html`: política de privacidade (o app não coleta dados; tudo fica no aparelho).
-- `suporte.html`: forma de contato com o desenvolvedor.
+- `suporte.html`: perguntas frequentes e contato com o desenvolvedor.
+
+As duas usam o estilo de `documento.css`. Se a política mudar, atualize a data no topo da página.
