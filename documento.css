@@ -66,6 +66,7 @@ footer .conteiner { display: flex; justify-content: space-between; gap: 16px; fl
 footer a { color: var(--texto-apoio); }
 
 @media (max-width: 560px) {
-  nav.links { gap: 14px; }
+  header.topo .conteiner { flex-wrap: wrap; row-gap: 8px; }
+  nav.links { gap: 16px; flex-wrap: nowrap; }
   .resumo, .cartao { padding: 16px 18px; }
 }
