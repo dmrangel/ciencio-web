@@ -10,6 +10,8 @@
   --verde: #1BD96A;
   --verde-suave: rgba(27, 217, 106, 0.25);
 }
+@font-face { font-family: Inter; font-style: normal; font-weight: 400 600; font-display: swap; src: url(fonts/inter-latin.woff2) format('woff2'); }
+@font-face { font-family: 'Space Grotesk'; font-style: normal; font-weight: 500 700; font-display: swap; src: url(fonts/space-grotesk-latin.woff2) format('woff2'); }
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -70,3 +72,5 @@ footer a { color: var(--texto-apoio); }
   nav.links { gap: 16px; flex-wrap: nowrap; }
   .resumo, .cartao { padding: 16px 18px; }
 }
+
+.cartao h2 { font-size: 19px; margin: 0 0 6px; }
